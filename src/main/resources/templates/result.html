@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登録完了 | Spring Boot App</title>
+    <link href="https://cdn.jsdelivr.net" rel="stylesheet">
+</head>
+<link href="https://cdn.jsdelivr.net" rel="stylesheet">
+<body>
+    <h1>送信結果</h1>
+    <p>こんにちは、<span th:text="${val}">ゲスト</span>さん！</p>
+    <a th:href="@{/form}">戻る</a>
+</body>
+<p>現在の登録者一覧：</p>
+<ul>
+    <li th:each="u : ${allUsers}" th:text="${u.name}"></li>
+</ul>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ユーザープロフィール</title>
+</head>
+<body>
+    <h1>ユーザー情報</h1>
+    <!-- ${...} の形式でModelにセットした値を呼び出す -->
+    <p>ID: <span th:text="${userId}">000</span></p>
+    <p>名前: <span th:text="${userName}">ゲスト</span></p>
+
+    <div th:if="${userId == 'admin'}">
+        <p style="color: red;">管理者としてログイン中</p>
+    </div>
+</body>
+</html>

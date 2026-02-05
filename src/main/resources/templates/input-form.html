@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ユーザー登録・管理 | Spring Boot App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body class="container mt-5">
+    <div class="card p-4 shadow">
+        <h1 class="mb-4">ユーザー管理</h1>
+        <form th:action="@{/confirm}" th:object="${user}" method="post" enctype="multipart/form-data">
+            <input type="hidden" th:field="*{id}"> <!-- 編集時にIDを保持するために必要 -->
+            <div class="mb-3">
+                <label class="form-label">名前</label>
+                <input type="text" th:field="*{name}" class="form-control" placeholder="名前を入力">
+                <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger small"></p>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">プロフィール画像</label>
+                <input type="file" name="imageFile" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary">保存する</button>
+        </form>
+
+        <hr class="my-4">
+
+        <h3>登録者一覧</h3>
+        <table class="table table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>ID</th><th>名前</th><th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- ここにControllerから全ユーザーを送る必要があります（下記参照） -->
+                <tr th:each="u : ${allUsers}">
+                    <td th:text="${u.id}"></td><td>
+                        <img th:if="${u.imageName}" th:src="@{/images/{name}(name=${u.imageName})}" 
+                            style="width:50px; height:50px; object-fit:cover;" class="rounded-circle">
+                    </td>
+                    <td th:text="${u.name}"></td>
+                    <td>
+                        <a th:href="@{/edit/{id}(id=${u.id})}" class="btn btn-sm btn-outline-secondary">編集</a>
+                        <a th:href="@{/delete/{id}(id=${u.id})}" class="btn btn-sm btn-danger" 
+                           onclick="return confirm('本当に削除しますか？')">削除</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
